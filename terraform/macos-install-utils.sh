@@ -38,7 +38,7 @@ fi
 # --------------------------------------
 # 2. Install required prerequisites
 # --------------------------------------
-PREREQS=(git direnv fzf awscli)
+PREREQS=(git direnv fzf awscli gh)
 for pkg in "${PREREQS[@]}"; do
   echo_info "Checking for $pkg..."
   if brew list "$pkg" &>/dev/null; then
