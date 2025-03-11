@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+copy_and_wait() {
+    echo -n "$1" | pbcopy
+    read -p "Press Enter to copy the next field..."
+}
+
+export GUM_INPUT_WIDTH=120
+conn_string=$(gum input --prompt "URL: " --placeholder "e.g. postgres://")
+
+# Remove the 'postgres://' prefix if it exists
+conn_string=${conn_string#postgres://}
+
+# Separate the fields using ':' and '@' as delimiters
+IFS=':@/' read -r FIELD1 FIELD2 FIELD3 PORT FIELD4 <<< "$conn_string"
+
+# Copy each field to the clipboard and wait for Enter key
+printf "Copying the username to your clipboard\n"
+copy_and_wait "$FIELD1"
+printf "Copying the password to your clipboard\n"
+copy_and_wait "$FIELD2"
+printf "Copying the endpoint to your clipboard\n"
+copy_and_wait "$FIELD3"
+printf "Copying the database to your clipboard\n"
+copy_and_wait "$FIELD4"
+
+echo "All fields have been copied."
